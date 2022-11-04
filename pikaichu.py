@@ -24,19 +24,15 @@ if __name__ == "__main__":
     # Recommended if RAM < 64 GB
     pipe.enable_attention_slicing()
 
-    prompt = "Pikachu painted by Pablo Picasso."
+    prompt = "Pikachu painted by El Greco."
 
     n_steps = 50  # Default
     # n_steps = 100
 
-    n_images = 1  # Default
-    # n_images = 3
-
     # First-time "warmup" pass
     _ = pipe(prompt, num_inference_steps=1)
 
-    output = pipe(prompt, num_inference_steps=n_steps, num_images_per_prompt=n_images)
+    output = pipe(prompt, num_inference_steps=n_steps)
 
-    for n_image in range(n_images):
-        image = output.images[n_image]
-        image.save(f"pikachu_{n_image + 1}.png")
+    image = output.images[0]
+    image.save("pikachu.png")
