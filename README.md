@@ -22,6 +22,7 @@ python pikaichu.py
 - `conda env remove --name img-gen-playground`
 - `black pikaichu.py`
 - PikAIchu or pikAIchu
+- https://photos.app.goo.gl/NRqNemh8hrtPZVMv8
 
 ### Install openpyxl on Windows 10 with Anaconda
 
