@@ -19,8 +19,9 @@ python pikaichu.py
 ## Notes
 
 - `conda list`
-- `conda env remove --name img-gen-playground`
+- `conda deactivate` + `conda env remove --name img-gen-playground`
 - `black pikaichu.py`
+- `isort pikaichu.py`
 - PikAIchu or pikAIchu
 - https://photos.app.goo.gl/NRqNemh8hrtPZVMv8
 

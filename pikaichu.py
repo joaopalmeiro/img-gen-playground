@@ -12,13 +12,31 @@
 # https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion#diffusers.StableDiffusionPipeline.__call__
 # https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion#diffusers.pipelines.stable_diffusion.StableDiffusionPipelineOutput
 
-from diffusers import StableDiffusionPipeline
+import json
 from datetime import datetime
+
+from diffusers import StableDiffusionPipeline
 
 DEFAULT_SIZE: int = 512
 DEFAULT_STEPS: int = 50
 
 INSTAGRAM_STORIES_AR: float = 9 / 16
+
+METADATA_PATH: str = "output/metadata.json"
+
+
+def read_json(path):
+    with open(path) as file:
+        data = json.load(file)
+
+    return data
+
+
+def write_json(data, output_path):
+    with open(output_path, "w", encoding="utf-8") as file:
+        # https://stackoverflow.com/a/36142844
+        json.dump(data, file, ensure_ascii=False, indent=2, default=str)
+
 
 if __name__ == "__main__":
     # https://huggingface.co/runwayml/stable-diffusion-v1-5
@@ -49,5 +67,16 @@ if __name__ == "__main__":
     )
 
     image = output.images[0]
+
+    dt = datetime.now()
+    filename = f"{prefix}_{int(dt.timestamp())}.png"
+
     # https://stackoverflow.com/questions/16755394/what-is-the-easiest-way-to-get-current-gmt-time-in-unix-timestamp-format
-    image.save(f"output/{prefix}_{int(datetime.now().timestamp())}.png")
+    image.save(f"output/{filename}")
+
+    metadata = read_json(METADATA_PATH)
+
+    new_metadata = {"filename": filename, "date": dt.date(), "prompt": prompt}
+    metadata.append(new_metadata)
+
+    write_json(metadata, METADATA_PATH)
