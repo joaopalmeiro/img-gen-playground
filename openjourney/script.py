@@ -12,9 +12,7 @@ SIZE: int = 512
 NUM_INFERENCE_STEPS: int = 50
 SEED: int = 2
 
-PROMPT: str = (
-    f"{PROMPT_PREFIX} portrait of charizard, elegant, highly detailed, digital painting"
-)
+PROMPT: str = f"{PROMPT_PREFIX} portrait of charizard, elegant, highly detailed, digital painting, artstation, concept art, smooth, sharp focus, illustration"
 
 if __name__ == "__main__":
     # https://replicate.com/prompthero/openjourney/versions
@@ -35,5 +33,5 @@ if __name__ == "__main__":
 
     print("URL:", output[0])
     urllib.request.urlretrieve(
-        output[0], f"output/{slugify(PROMPT)}-{int(time.time())}.png"
+        output[0], f"output/{slugify(PROMPT)}-{SEED}-{int(time.time())}.png"
     )
